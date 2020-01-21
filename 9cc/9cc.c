@@ -20,6 +20,7 @@ struct Token {
   char *str;
 };
 
+// Current token
 Token *token;
 
 void error(char *fmt, ...) {
