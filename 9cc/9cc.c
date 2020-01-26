@@ -1,35 +1,8 @@
-#include <ctype.h>
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "9cc.h"
 
-// 
+//
 // Tokenizer
-// 
-
-typedef enum {
-  TK_RESERVED, // input symbol
-  TK_NUM,      // input number
-  TK_EOF,      // end of input
-} TokenKind;
-
-typedef struct Token Token;
-
-struct Token {
-  TokenKind kind; // token kind
-  Token *next;    // next token
-  int val;        // number(when kind == TK_NUM)
-  char *str;      // token string
-  int len;        // length of token string
-};
-
-// Input program
-char *user_input;
-
-// Current token
-Token *token;
+//
 
 void error(char *fmt, ...) {
   va_list ap;
@@ -140,30 +113,10 @@ Token *tokenize() {
   return head.next;
 }
 
-// 
+//
 // Parser
-// 
+//
 
-typedef enum {
-  ND_ADD,      // +
-  ND_SUB,      // -
-  ND_MUL,      // *
-  ND_DIV,      // /
-  ND_EQ,       // ==
-  ND_NE,       // !=
-  ND_LT,       // <
-  ND_LE,       // <=
-  ND_NUM,      // number(int)
-} NodeKind;
-
-typedef struct Node Node;
-
-struct Node {
-  NodeKind kind;  // type of node
-  Node *lhs;      // left hand side
-  Node *rhs;      // right hand side
-  int val;        // use only ND_NUM type
-};
 
 Node *node_base(NodeKind kind) {
   Node *node = calloc(1, sizeof(Node));
@@ -279,9 +232,9 @@ Node *primary() {
   return new_node_num(expect_number());
 }
 
-// 
+//
 // Code generator
-// 
+//
 
 void gen(Node *node) {
   if (node->kind == ND_NUM) {
