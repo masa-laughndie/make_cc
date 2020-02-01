@@ -29,9 +29,9 @@ void error(char *fmt, ...);
 void error_at(char *loc, char *fmt, ...);
 bool consume(char *op);
 void expect(char *op);
-int expect_number();
-bool at_eof();
-Token *tokenize();
+int expect_number(void);
+bool at_eof(void);
+Token *tokenize(void);
 
 extern char *user_input;
 extern Token *token;
@@ -61,7 +61,7 @@ struct Node {
   int val;        // use only ND_NUM type
 };
 
-Node *expr();
+Node *expr(void);
 
 //
 // codegen.c

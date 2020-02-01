@@ -21,21 +21,20 @@ Node *new_node_num(int val) {
   return node;
 }
 
-Node *expr();
-Node *equality();
-Node *relational();
-Node *add();
-Node *mul();
-Node *unary();
-Node *primary();
+Node *equality(void);
+Node *relational(void);
+Node *add(void);
+Node *mul(void);
+Node *unary(void);
+Node *primary(void);
 
 // expr = equality
-Node *expr() {
+Node *expr(void) {
   return equality();
 }
 
 // equality = relational ( "==" relational | "!=" relational)*
-Node *equality() {
+Node *equality(void) {
   Node *node = relational();
 
   for(;;) {
@@ -49,7 +48,7 @@ Node *equality() {
 }
 
 // relational = add ( "<" add | "<=" add | ">" add | ">=" add)*
-Node *relational() {
+Node *relational(void) {
   Node *node = add();
 
   for(;;) {
@@ -67,7 +66,7 @@ Node *relational() {
 }
 
 // add = mul ("+" mul | "-" mul)*
-Node *add() {
+Node *add(void) {
   Node *node = mul();
 
   for (;;) {
@@ -81,7 +80,7 @@ Node *add() {
 }
 
 // mul = unary ("*" unary | "/" unary)*
-Node *mul() {
+Node *mul(void) {
   Node *node = unary();
 
   for (;;) {
@@ -95,7 +94,7 @@ Node *mul() {
 }
 
 // unary = ("+" | "-")? primary
-Node *unary() {
+Node *unary(void) {
   if (consume("+"))
     return unary();
   if (consume("-"))
@@ -104,7 +103,7 @@ Node *unary() {
 }
 
 // primary = "(" expr ")" | num
-Node *primary() {
+Node *primary(void) {
   if (consume("(")) {
     Node *node = expr();
     expect(")");

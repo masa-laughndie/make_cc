@@ -1,6 +1,6 @@
 #include "9cc.h"
 
-char *user_input:
+char *user_input;
 Token *token;
 
 void error(char *fmt, ...) {
@@ -44,7 +44,7 @@ void expect(char *op) {
   token = token->next;
 }
 
-int expect_number() {
+int expect_number(void) {
   if (token->kind != TK_NUM)
     error_at(token->str, "expected a number!");
   int val = token->val;
@@ -52,7 +52,7 @@ int expect_number() {
   return val;
 }
 
-bool at_eof() {
+bool at_eof(void) {
   return token->kind == TK_EOF;
 }
 
