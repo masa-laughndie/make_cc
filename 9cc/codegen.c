@@ -1,6 +1,6 @@
 #include "9cc.h"
 
-void gen(Node *node) {
+static void gen(Node *node) {
   if (node->kind == ND_NUM) {
     printf("  push %d\n", node->val);
     return;

@@ -1,13 +1,13 @@
 #include "9cc.h"
 
-Node *node_base(NodeKind kind) {
+static Node *node_base(NodeKind kind) {
   Node *node = calloc(1, sizeof(Node));
   node->kind = kind;
   return node;
 }
 
 // For symbol node
-Node *new_node(NodeKind kind, Node *lhs, Node *rhs) {
+static Node *new_node(NodeKind kind, Node *lhs, Node *rhs) {
   Node *node = node_base(kind);
   node->lhs = lhs;
   node->rhs = rhs;
@@ -15,18 +15,18 @@ Node *new_node(NodeKind kind, Node *lhs, Node *rhs) {
 }
 
 // For number node
-Node *new_node_num(int val) {
+static Node *new_node_num(int val) {
   Node *node = node_base(ND_NUM);
   node->val = val;
   return node;
 }
 
-Node *equality(void);
-Node *relational(void);
-Node *add(void);
-Node *mul(void);
-Node *unary(void);
-Node *primary(void);
+static Node *equality(void);
+static Node *relational(void);
+static Node *add(void);
+static Node *mul(void);
+static Node *unary(void);
+static Node *primary(void);
 
 // expr = equality
 Node *expr(void) {
@@ -34,7 +34,7 @@ Node *expr(void) {
 }
 
 // equality = relational ( "==" relational | "!=" relational)*
-Node *equality(void) {
+static Node *equality(void) {
   Node *node = relational();
 
   for(;;) {
@@ -48,7 +48,7 @@ Node *equality(void) {
 }
 
 // relational = add ( "<" add | "<=" add | ">" add | ">=" add)*
-Node *relational(void) {
+static Node *relational(void) {
   Node *node = add();
 
   for(;;) {
@@ -66,7 +66,7 @@ Node *relational(void) {
 }
 
 // add = mul ("+" mul | "-" mul)*
-Node *add(void) {
+static Node *add(void) {
   Node *node = mul();
 
   for (;;) {
@@ -80,7 +80,7 @@ Node *add(void) {
 }
 
 // mul = unary ("*" unary | "/" unary)*
-Node *mul(void) {
+static Node *mul(void) {
   Node *node = unary();
 
   for (;;) {
@@ -94,7 +94,7 @@ Node *mul(void) {
 }
 
 // unary = ("+" | "-")? primary
-Node *unary(void) {
+static Node *unary(void) {
   if (consume("+"))
     return unary();
   if (consume("-"))
@@ -103,7 +103,7 @@ Node *unary(void) {
 }
 
 // primary = "(" expr ")" | num
-Node *primary(void) {
+static Node *primary(void) {
   if (consume("(")) {
     Node *node = expr();
     expect(")");

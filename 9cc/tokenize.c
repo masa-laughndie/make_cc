@@ -56,7 +56,7 @@ bool at_eof(void) {
   return token->kind == TK_EOF;
 }
 
-Token *new_token(TokenKind kind, Token *cur, char *str, int len) {
+static Token *new_token(TokenKind kind, Token *cur, char *str, int len) {
   Token *tok = calloc(1, sizeof(Token));
   tok->kind = kind;
   tok->str = str;
@@ -65,7 +65,7 @@ Token *new_token(TokenKind kind, Token *cur, char *str, int len) {
   return tok;
 }
 
-bool startswitch(char *p, char *q) {
+static bool startswitch(char *p, char *q) {
   return memcmp(p, q, strlen(q)) == 0;
 }
 
