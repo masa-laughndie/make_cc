@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
   // Tokinize and parse
   user_input = argv[1];
   token = tokenize();
-  Node *node = expr();
+  Node *node = program();
 
   // Travers the AST to emit assembly
   codegen(node);

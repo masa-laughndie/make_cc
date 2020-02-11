@@ -56,12 +56,13 @@ typedef struct Node Node;
 
 struct Node {
   NodeKind kind;  // type of node
+  Node *next;     // next node
   Node *lhs;      // left hand side
   Node *rhs;      // right hand side
   int val;        // use only ND_NUM type
 };
 
-Node *expr(void);
+Node *program(void);
 
 //
 // codegen.c
