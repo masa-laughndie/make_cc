@@ -1,10 +1,8 @@
 #include "9cc.h"
 
 int main(int argc, char **argv) {
-  if (argc != 2) {
+  if (argc != 2)
     error("%s: Wrong number of arguments!", argv[0]);
-    return 1;
-  }
 
   // Tokinize and parse
   user_input = argv[1];
