@@ -35,6 +35,15 @@ bool consume(char *op) {
   return true;
 }
 
+// 期待する識別子かどうかを判定して、当てはまる場合は次のトークンに進めて元のトークンを返す
+Token *consume_ident(void) {
+  if (token->kind != TK_IDENT)
+    return NULL;
+  Token *t = token;
+  token = token->next;
+  return t;
+}
+
 // 期待する演算子かどうかを判定して、当てはまる場合は次のトークンに進める
 void expect(char *op) {
   if (token->kind != TK_RESERVED ||
@@ -95,6 +104,12 @@ Token *tokenize() {
     if (startswitch(p, "return") && !is_alnum(p[6])) {
       cur = new_token(TK_RESERVED, cur, p, 6);
       p += 6;
+      continue;
+    }
+
+    // Idetifier
+    if ('a' <= *p && *p <= 'z') {
+      cur = new_token(TK_IDENT, cur, p++, 1);
       continue;
     }
 
